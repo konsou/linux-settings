@@ -10,5 +10,6 @@ FISH_CONFIG="${HOME}/.config/fish/config.fish"
 # TODO: trim blank lines
 sed -i "s;# Shared fish config;;g" "${FISH_CONFIG}"
 sed -i "s;. ${SCRIPT_DIR}/config.fish;;g" "${FISH_CONFIG}"
+echo "" >> "${FISH_CONFIG}"
 echo "# Shared fish config" >> "${FISH_CONFIG}"
 echo ". ${SCRIPT_DIR}/config.fish" >> "${FISH_CONFIG}"
