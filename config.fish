@@ -10,6 +10,16 @@ if status is-interactive
   alias untar "tar -xvf"
   alias .. "cd .."
 
+  # Check updates once a day
+  set update_interval 86400
+  set current_timestamp (date +"%s")
+  if test $current_timestamp -ge \
+     (math $KONSO_SETTINGS_LAST_UPDATE + $update_interval)
+    echo "Update shared settings..."
+    fish -c "cd $KONSO_SETTINGS_REPO && git pull"
+    set -Ux KONSO_SETTINGS_LAST_UPDATE $current_timestamp
+  end
+
   # OTHER COMMANDS
   zoxide init fish --cmd cd | source
   fastfetch

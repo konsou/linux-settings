@@ -3,6 +3,10 @@
 SCRIPT_PATH=$(realpath $0)
 SCRIPT_DIR=$(dirname $SCRIPT_PATH)
 
+# Set repo path for updater in fish config
+fish -c "set -Ux KONSO_SETTINGS_REPO ${SCRIPT_DIR}"
+fish -c "set -Ux KONSO_SETTINGS_LAST_UPDATE $(date +\"%s\")"
+
 echo "Install fish config file"
 mkdir -p -v "${HOME}/.config/fish"
 FISH_CONFIG="${HOME}/.config/fish/config.fish"
