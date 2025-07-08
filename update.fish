@@ -17,7 +17,7 @@ set git_pull_result (cd $KONSO_SETTINGS_REPO && git pull)
 cd $saved_pwd
 set -Ux KONSO_SETTINGS_LAST_UPDATE $current_timestamp
 
-if test $git_pull_result = "Already up to date."
+if test "$git_pull_result" = "Already up to date."
   echo $git_pull_result
   exit 0
 end
