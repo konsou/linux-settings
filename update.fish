@@ -24,3 +24,4 @@ end
 
 echo "Re-run install.sh..."
 $KONSO_SETTINGS_REPO/install.sh
+echo "Settings update done.
