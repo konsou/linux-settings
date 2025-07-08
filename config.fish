@@ -2,13 +2,15 @@ if status is-interactive
   echo "Loading shared fish config"
 
   # ALIASES
-  alias ls "ls --time-style=iso --color -lh"
-  alias "anacrontab" "nano ~/.anacron/etc/anacrontab"
-  alias "fish_config_file" "nano ~/.config/fish/config.fish"
-  alias rtfm tldr
-  alias upgrade-pip "python -m pip install --upgrade pip"
-  alias untar "tar -xvf"
   alias .. "cd .."
+  alias anacrontab "nano ~/.anacron/etc/anacrontab"
+  alias cd.. "cd .."
+  alias fish_config_file "nano ~/.config/fish/config.fish"
+  alias ls "ls --time-style=iso --color -lh"
+  alias process-list "ps aux"
+  alias rtfm tldr
+  alias untar "tar -xvf"
+  alias upgrade-pip "python -m pip install --upgrade pip"
 
   # Check updates once a day
   set update_interval 86400
@@ -23,5 +25,6 @@ if status is-interactive
   # OTHER COMMANDS
   zoxide init fish --cmd cd | source
   fastfetch
+  echo "Utils reminder: bashtop dysk htop iotop jdupes jnettop ncdu nvtop"
 end
 
