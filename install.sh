@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 function append_to_file_if_not_there {
-  grep "${1}" "${2}" > /dev/null || echo "${1}" >> "${2}"
+  # Grep doesn't like .* (and lots of other chars as well,
+  # but we don't care about them yet)
+  local escaped=$(echo "${1}" | sed "s/[*.]/\\\&/g")
+  grep "${escaped}" "${2}" > /dev/null || echo "${1}" >> "${2}"
 }
 
 SCRIPT_DIR=$(dirname $(realpath $0))
@@ -18,14 +21,21 @@ append_to_file_if_not_there ". ${SCRIPT_DIR}/config.fish" "${FISH_CONFIG}"
 
 echo "Install nanorc"
 NANORC_DIR="${HOME}/.config/nano"
-NANORC="${NANORC_DIR=}/nanorc"
+NANORC="${NANORC_DIR}/nanorc"
 mkdir -p -v "${NANORC_DIR}"
+if [[ ! -f "${SCRIPT_DIR}/nanorc" ]]; then
+  cp -v "${SCRIPT_DIR}/nanorc.template" "${SCRIPT_DIR}/nanorc"
+fi
 if [[ -f "${NANORC}" ]] \
  && [[ $(readlink -f "${NANORC}") != "${SCRIPT_DIR}/nanorc" ]]
 then
   echo "${NANORC} exists"
   mv -v --backup=numbered "${NANORC}" "${NANORC}.konso.bak"
 fi
-echo "Create nanorc symlink"
-ln -svf "${SCRIPT_DIR}/nanorc" "${NANORC}"
+if [[ ! -f "${NANORC}" ]]; then
+  echo "Create nanorc symlink"
+  ln -sv "${SCRIPT_DIR}/nanorc" "${NANORC}"
+fi
+append_to_file_if_not_there "# Very much syntax highlighting" "${NANORC}"
+append_to_file_if_not_there "include \"${SCRIPT_DIR}/nano-syntax-highlighting/*.nanorc\"" "${NANORC}"
 

@@ -4,5 +4,3 @@
 
 # Enable line wrap
 set softwrap
-# Very much syntax highlighting
-include "/home/konso/PycharmProjects/linux-settings/nano-syntax-highlighting/*.nanorc"
