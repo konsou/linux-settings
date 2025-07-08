@@ -33,8 +33,6 @@ NANORC_TEMPLATE=$(cat << EOF
 
 # Syntax highlighting
 include "${SCRIPT_DIR}/nano-syntax-highlighting/*.nanorc"
-
-
 EOF
 )
 echo "${NANORC_TEMPLATE}" > "${SCRIPT_DIR}/nanorc"
