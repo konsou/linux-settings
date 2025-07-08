@@ -1,6 +1,10 @@
 if status is-interactive
   echo "Loading shared fish config"
 
+  # FISH SETTINGS
+  # Disable the "Welcome to fish..." text
+  set -Ux fish_greeting ""
+
   # ALIASES
   alias .. "cd .."
   alias anacrontab "nano ~/.anacron/etc/anacrontab"
@@ -12,6 +16,7 @@ if status is-interactive
   alias untar "tar -xvf"
   alias upgrade-pip "python -m pip install --upgrade pip"
 
+  # SELF UPDATE
   # Check updates once a day
   set update_interval 86400
   set current_timestamp (date +"%s")
