@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# https://wiki.archlinux.org/title/Desktop_notifications#Send_notifications_to_another_user
+SEND_TO_USER=konso
+
+function notify-send {
+  if systemd-run --machine=$SEND_TO_USER@.host --user notify-send "$@" >& /dev/null; then
+    echo "Sent notification to $SEND_TO_USER"
+  else
+    echo "ERROR: Couldn't send notification to $SEND_TO_USER"
+  fi
+}

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+DEVICE="${1}"
+MOUNT_DIR="${2}"
+
+function btrfs-root-device {
+  echo $(btrfs filesystem show / | grep 'devid' --max-count 1 | awk '{print $NF}')
+}
+
+function temp-dir-name {
+  echo $(mktemp -t btrfs-XXXXXX --directory)
+}
+
+function print-usage {
+  echo "Mounts the btrfs top-level subvolume to a given path"
+  echo "Usage: $(basename "${0}") DEVICE MOUNT_DIR"
+  echo "DEVICE defaults to btrfs root device ($(btrfs-root-device))"
+  echo "MOUNT_DIR defaults to a newly created temporary directory"
+}
+
+if [[ "${DEVICE}" = "-h" ]] || [[ "${DEVICE}" = "--help" ]]; then
+  print-usage
+  exit 0
+fi
+
+if [[ -z "${DEVICE}" ]]; then
+  DEVICE=$(btrfs-root-device)
+  echo "Device not set, using ${DEVICE}"
+fi
+if [[ -z "${MOUNT_DIR}" ]]; then
+  MOUNT_DIR=$(temp-dir-name)
+  echo "Mount dir not set, using ${MOUNT_DIR}"
+fi
+
+mount -v --mkdir -o subvolid=5 "${DEVICE}" "${MOUNT_DIR}"

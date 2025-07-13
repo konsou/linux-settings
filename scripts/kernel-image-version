@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Check the kernel version of an image
+
+if [[ -z $1 ]]; then
+  echo "No path to kernel image given"
+  exit 1
+fi
+
+strings "${1}" | grep -P '\d\.\d{1,2}\.\d{1,2}'
+
