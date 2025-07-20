@@ -47,3 +47,14 @@ if [[ ! -f "${NANORC}" ]]; then
   echo "Create nanorc symlink"
   ln -sv "${SCRIPT_DIR}/nanorc" "${NANORC}"
 fi
+
+echo "Install ghostty config file"
+GHOSTTY_CONFIG_DIR="${HOME}/.config/ghostty"
+GHOSTTY_CONFIG_FILE="${GHOSTTY_CONFIG_DIR}/config"
+mkdir -p "${GHOSTTY_CONFIG_DIR}"
+if [[ ! -f "${GHOSTTY_CONFIG_FILE}" ]]; then
+  echo "Config file ${GHOSTTY_CONFIG_FILE} doesn't exist, creating"
+  touch "${GHOSTTY_CONFIG_FILE}"
+fi
+append_to_file_if_not_there "config-file = ${SCRIPT_DIR}/ghostty-config" "${GHOSTTY_CONFIG_FILE}"
+append_to_file_if_not_there "gtk-custom-css = ${SCRIPT_DIR}/ghostty-toast-more-margin.css" "${GHOSTTY_CONFIG_FILE}"
