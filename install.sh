@@ -13,11 +13,23 @@ echo "Set KONSO_SETTINGS_* env vars"
 fish -c "set -Ux KONSO_SETTINGS_REPO ${SCRIPT_DIR}"
 fish -c "set -Ux KONSO_SETTINGS_LAST_UPDATE $(date +\"%s\")"
 
-echo "Install fish config file"
-mkdir -p -v "${HOME}/.config/fish"
-FISH_CONFIG="${HOME}/.config/fish/config.fish"
-append_to_file_if_not_there "# Shared fish config" "${FISH_CONFIG}"
-append_to_file_if_not_there ". ${SCRIPT_DIR}/config.fish" "${FISH_CONFIG}"
+echo "Install fish config"
+FISH_CONFIG_DIR="${HOME}/.config/fish"
+FISH_CONFIG_FILE="${FISH_CONFIG_DIR}/config.fish"
+FISH_PROMPT_FILE="${FISH_CONFIG_DIR}/functions/fish_prompt.fish"
+mkdir -p -v "${FISH_CONFIG_DIR}/functions"  # Creates the parent config dir as well
+append_to_file_if_not_there "# Shared fish config" "${FISH_CONFIG_FILE}"
+append_to_file_if_not_there ". ${SCRIPT_DIR}/config.fish" "${FISH_CONFIG_FILE}"
+if [[ -f "${FISH_PROMPT_FILE}" ]] \
+ && [[ $(readlink -f "${FISH_PROMPT_FILE}") != "${SCRIPT_DIR}/fish_prompt.fish" ]]
+then
+  echo "${FISH_PROMPT_FILE} exists"
+  mv -v --backup=numbered "${FISH_PROMPT_FILE}" "${FISH_PROMPT_FILE}.konso.bak"
+fi
+if [[ ! -f "${FISH_PROMPT_FILE}" ]]; then
+  echo "Create fish prompt file symlink"
+  ln -sv "${SCRIPT_DIR}/fish_prompt.fish" "${FISH_PROMPT_FILE}"
+fi
 
 echo "Install/re-create nanorc"
 NANORC_DIR="${HOME}/.config/nano"
@@ -51,7 +63,7 @@ fi
 echo "Install ghostty config file"
 GHOSTTY_CONFIG_DIR="${HOME}/.config/ghostty"
 GHOSTTY_CONFIG_FILE="${GHOSTTY_CONFIG_DIR}/config"
-mkdir -p "${GHOSTTY_CONFIG_DIR}"
+mkdir -p -v "${GHOSTTY_CONFIG_DIR}"
 if [[ ! -f "${GHOSTTY_CONFIG_FILE}" ]]; then
   echo "Config file ${GHOSTTY_CONFIG_FILE} doesn't exist, creating"
   touch "${GHOSTTY_CONFIG_FILE}"
