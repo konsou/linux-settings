@@ -13,6 +13,9 @@ echo "Set KONSO_SETTINGS_* env vars"
 fish -c "set -Ux KONSO_SETTINGS_REPO ${SCRIPT_DIR}"
 fish -c "set -Ux KONSO_SETTINGS_LAST_UPDATE $(date +\"%s\")"
 
+echo "Set other env vars"
+fish -c "set -Ux EDITOR $(which nano)"
+
 echo "Install fish config"
 FISH_CONFIG_DIR="${HOME}/.config/fish"
 FISH_CONFIG_FILE="${FISH_CONFIG_DIR}/config.fish"
