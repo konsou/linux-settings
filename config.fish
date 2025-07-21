@@ -1,6 +1,7 @@
 if status is-interactive
   echo "Loading shared fish config"
 
+
   # FISH SETTINGS
   # Disable the "Welcome to fish..." text
   set -Ux fish_greeting ""
@@ -37,8 +38,17 @@ if status is-interactive
   alias egrep='egrep --color=auto'
 
 
+  # SSH Agent
+  systemctl --user is-active --quiet ssh-agent.service
+  if test $status -gt 0
+    echo "Enabling and starting ssh-agent"
+    systemctl --user enable --now ssh-agent.service
+  end
+
+
   # SELF UPDATE
   $KONSO_SETTINGS_REPO/update.fish
+
 
   # OTHER COMMANDS
   zoxide init fish --cmd cd | source
