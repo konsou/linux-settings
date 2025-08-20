@@ -7,6 +7,11 @@ function append_to_file_if_not_there {
   grep "${escaped}" "${2}" > /dev/null || echo "${1}" >> "${2}"
 }
 
+if ! which fish; then
+  echo "fish shell not detected - please install"
+  exit 1
+fi
+
 SCRIPT_DIR=$(dirname $(realpath $0))
 
 echo "Set KONSO_SETTINGS_* env vars"
@@ -16,6 +21,9 @@ fish -c "set -Ux KONSO_SETTINGS_LAST_UPDATE $(date +\"%s\")"
 echo "Set other env vars"
 fish -c "set -Ux EDITOR $(which nano)"
 fish -c "fish_add_path ${SCRIPT_DIR}/scripts"
+
+echo "Set fish as default shell"
+chsh -s $(which fish)
 
 echo "Install fish config"
 FISH_CONFIG_DIR="${HOME}/.config/fish"
