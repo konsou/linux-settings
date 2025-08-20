@@ -38,12 +38,12 @@ if status is-interactive
   alias egrep='egrep --color=auto'
 
 
-  # SSH Agent
-  systemctl --user is-active --quiet ssh-agent.service
-  if test $status -gt 0
-    echo "Enabling and starting ssh-agent"
-    systemctl --user enable --now ssh-agent.service
-  end
+  # SSH Agent - fix
+  # systemctl --user is-active --quiet ssh-agent.service
+  # if test $status -gt 0
+  #   echo "Enabling and starting ssh-agent"
+  #   systemctl --user enable --now ssh-agent.service
+  # end
 
 
   # SELF UPDATE
