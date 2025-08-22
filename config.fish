@@ -18,6 +18,7 @@ if status is-interactive
   alias anacrontab "nano ~/.anacron/etc/anacrontab"
   alias cd.. "cd .."
   alias fish_config_file "nano ~/.config/fish/config.fish"
+  alias fstab "nano /etc/fstab"
 
   # Replace ls with eza
   alias ls='eza -l --time-style=iso --color=always --group-directories-first --icons'  # preferred listing
