@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo "Calculating number of files and folders in ${1}..."
+rm -rfv "${1}" | pv -l -s $(du -a "${1}" | wc -l) > /dev/null
