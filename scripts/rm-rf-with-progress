@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 echo "Calculating number of files and folders in ${1}..."
-rm -rfv "${1}" | pv -l -s $(du -a "${1}" | wc -l) > /dev/null
+DU_RESULT=$(du -a "${1}" | wc -l)
+echo "${DU_RESULT} entries found. Starting deletion."
+rm -rfv "${1}" | pv -l -s "${DU_RESULT}" > /dev/null
