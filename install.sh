@@ -22,8 +22,12 @@ echo "Set other env vars"
 fish -c "set -Ux EDITOR $(which nano)"
 fish -c "fish_add_path ${SCRIPT_DIR}/scripts"
 
-echo "Set fish as default shell"
-chsh -s $(which fish)
+if [[ ! "${SHELL}" = "$(which fish)" ]]; then
+  echo "Set fish as default shell"
+  chsh -s $(which fish)
+else
+  echo "Fish is already the default shell"
+fi
 
 echo "Install fish config"
 FISH_CONFIG_DIR="${HOME}/.config/fish"
