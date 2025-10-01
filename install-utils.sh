@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-APT_INSTALL_PKGS="fish nala eza bashtop htop iotop jdupes jnettop ncdu nvtop tldr zoxide"
+APT_INSTALL_PKGS="bat fish nala eza bashtop htop iotop jdupes jnettop ncdu nvtop tldr zoxide"
 echo "Install base utils"
 echo $APT_INSTALL_PKGS
 sudo apt install ${APT_INSTALL_PKGS}
