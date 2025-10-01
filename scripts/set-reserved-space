@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+echo "Setting reserved space to ${1} for device ${2}"
+
+if [[ -z $1 ]]; then
+  echo "Error: reserved space not set"
+  echo "Usage: ${0} [reserved space] [device]"
+  exit 1
+fi
+
+if [[ -z $2 ]]; then
+  echo "Error: device not set"
+  echo "Usage: ${0} [reserved space] [device]"
+  exit 1
+fi
+
+sudo tune2fs -m $1 "${2}"
