@@ -7,6 +7,10 @@
 # - included files can't have includes
 # - included files can't have binds
 
+# Tabs to spaces
+set tabsize 2
+set tabstospaces
+
 # Enable line wrap
 set softwrap
 
