@@ -28,6 +28,7 @@ if status is-interactive
 
   alias process-list "ps aux"
   alias rtfm tldr
+  alias service-files "cd /lib/systemd/system/"
   alias untar "tar -xvf"
   alias upgrade-pip "python -m pip install --upgrade pip"
 
