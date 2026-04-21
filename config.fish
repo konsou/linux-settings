@@ -13,6 +13,16 @@ if status is-interactive
   set -x MANPAGER "sh -c 'col -bx | batcat -l man -p'"
 
 
+  # FUNCTIONS
+  function using-file --argument-names path
+    sudo lsof $path
+  end
+
+  function using-port --argument-names port
+    sudo ss -tulpn | grep ":$port "
+  end
+
+
   # ALIASES
   alias .. "cd .."
   alias anacrontab "nano ~/.anacron/etc/anacrontab"
@@ -31,6 +41,9 @@ if status is-interactive
   alias service-files "cd /lib/systemd/system/"
   alias untar "tar -xvf"
   alias upgrade-pip "python -m pip install --upgrade pip"
+  # Referencing functions above
+  alias what-is-using-file "using-file"
+  alias what-is-using-port "using-port"
 
   # Add color
   alias dir='dir --color=auto'
