@@ -68,6 +68,6 @@ if status is-interactive
   # OTHER COMMANDS
   zoxide init fish --cmd cd | source
   fastfetch
-  echo "Utils reminder: bashtop dysk htop iotop jdupes jnettop ncdu nvtop tldr"
+  echo "Utils reminder: bashtop dysk htop iotop jdupes jnettop ncdu nvtop tldr using-file using-port process-list"
 end
 
