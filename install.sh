@@ -39,12 +39,26 @@ append_to_file_if_not_there ". ${SCRIPT_DIR}/config.fish" "${FISH_CONFIG_FILE}"
 if [[ -f "${FISH_PROMPT_FILE}" ]] \
  && [[ $(readlink -f "${FISH_PROMPT_FILE}") != "${SCRIPT_DIR}/fish_prompt.fish" ]]
 then
-  echo "${FISH_PROMPT_FILE} exists"
+  echo "${FISH_PROMPT_FILE} exists, moving it aside with .konso.bak extension"
   mv -v --backup=numbered "${FISH_PROMPT_FILE}" "${FISH_PROMPT_FILE}.konso.bak"
 fi
 if [[ ! -f "${FISH_PROMPT_FILE}" ]]; then
   echo "Create fish prompt file symlink"
   ln -sv "${SCRIPT_DIR}/fish_prompt.fish" "${FISH_PROMPT_FILE}"
+fi
+
+echo "Install micro config"
+MICRO_CONFIG_DIR="${HOME}/.config/micro"
+MICRO_CONFIG_FILE="${MICRO_CONFIG_DIR}/settings.json"
+if [[ -f "${MICRO_CONFIG_FILE}" ]] \
+ && [[ $(readlink -f "${MICRO_CONFIG_FILE}") != "${SCRIPT_DIR}/micro-settings.json" ]]
+then
+  echo "${MICRO_CONFIG_FILE} exists, moving it aside with .konso.bak extension"
+  mv -v --backup=numbered "${MICRO_CONFIG_FILE}" "${MICRO_CONFIG_FILE}.konso.bak"
+fi
+if [[ ! -f "${MICRO_CONFIG_FILE}" ]]; then
+  echo "Create micro config file symlink"
+  ln -sv "${SCRIPT_DIR}/micro-settings.json" "${MICRO_CONFIG_FILE}"
 fi
 
 echo "Install/re-create nanorc"
