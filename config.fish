@@ -25,10 +25,10 @@ if status is-interactive
 
   # ALIASES
   alias .. "cd .."
-  alias anacrontab "nano ~/.anacron/etc/anacrontab"
+  alias anacrontab "$EDITOR ~/.anacron/etc/anacrontab"
   alias cd.. "cd .."
-  alias fish_config_file "nano ~/.config/fish/config.fish"
-  alias fstab "nano /etc/fstab"
+  alias fish_config_file "$EDITOR ~/.config/fish/config.fish"
+  alias fstab "$EDITOR /etc/fstab"
 
   # Replace ls with eza
   alias ls='eza -l --time-style=iso --color=always --group-directories-first --icons'  # preferred listing
@@ -36,6 +36,7 @@ if status is-interactive
   alias lt='eza -aT --time-style=iso --color=always --group-directories-first --icons' # tree listing
   alias l.="eza -a | grep -e '^\.'"                                                    # show only dotfile
 
+  alias mi "micro"
   alias process-list "ps aux"
   alias rtfm tldr
   alias service-files "cd /lib/systemd/system/"
