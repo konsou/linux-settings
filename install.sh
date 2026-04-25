@@ -19,7 +19,7 @@ fish -c "set -Ux KONSO_SETTINGS_REPO ${SCRIPT_DIR}"
 fish -c "set -Ux KONSO_SETTINGS_LAST_UPDATE $(date +\"%s\")"
 
 echo "Set other env vars"
-fish -c "set -Ux EDITOR $(which nano)"
+fish -c "set -Ux EDITOR $(which micro)"
 fish -c "fish_add_path ${SCRIPT_DIR}/scripts"
 
 if [[ ! "${SHELL}" = "$(which fish)" ]]; then
