@@ -1,10 +1,27 @@
 #!/usr/bin/env bash
-APT_INSTALL_PKGS="bat fish nala eza bashtop htop iotop jdupes jnettop ncdu nvtop tldr zoxide fzf micro"
-# Needed for cargo-update
-APT_INSTALL_PKGS="${APT_INSTALL_PKGS} libssl-dev pkg-config"
+INSTALL_PKGS="fish btop htop iotop jdupes jnettop ncdu nvtop fastfetch"
+# A tldr program
+INSTALL_PKGS="${INSTALL_PKGS} tealdeer"
+# a cat clone with syntax highlighting and Git integration
+INSTALL_PKGS="${INSTALL_PKGS} bat"
+# Better ls replacement
+INSTALL_PKGS="${INSTALL_PKGS} eza"
+# Better cd replacement
+INSTALL_PKGS="${INSTALL_PKGS} zoxide fzf"
+# Needed for rust and cargo-update
+INSTALL_PKGS="${INSTALL_PKGS} gcc pkg-config"
+
+APT_INSTALL_PKGS="${INSTALL_PKGS} micro nala libssl-dev"
+ZYPPER_INSTALL_PKGS="${INSTALL_PKGS} micro-editor libopenssl-devel"
+
 echo "Install base utils"
-echo $APT_INSTALL_PKGS
-sudo apt install ${APT_INSTALL_PKGS}
+if [[ -f $(which apt) ]]; then
+	echo $APT_INSTALL_PKGS
+	sudo apt install ${APT_INSTALL_PKGS}
+elif [[ -f $(which zypper) ]]; then
+	echo $ZYPPER_INSTALL_PKGS
+	sudo zypper install ${ZYPPER_INSTALL_PKGS}
+fi
 
 echo "Install fish plugins"
 fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
@@ -30,12 +47,18 @@ source "$HOME/.cargo/env"
 cargo install --locked dysk
 
 echo "Install github cli"
-(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
-	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
-	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
-	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
-	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-	&& sudo apt update \
-	&& sudo apt install gh -y
+if [[ -f $(which apt) ]]; then
+	(type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+		&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+		&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+		&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+		&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+		&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+		&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+		&& sudo apt update \
+		&& sudo apt install gh -y
+elif [[ -f $(which zypper) ]]; then
+	sudo zypper addrepo https://cli.github.com/packages/rpm/gh-cli.repo
+	sudo zypper ref
+	sudo zypper install gh
+fi
