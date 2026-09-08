@@ -68,6 +68,6 @@ if status is-interactive
 
   # OTHER COMMANDS
   fastfetch
-  echo "Utils reminder: bashtop dysk htop iotop jdupes jnettop ncdu nvtop tldr using-file using-port process-list micro"
+  echo "Utils reminder: btop dysk htop iotop jdupes jnettop ncdu nvtop tldr using-file using-port process-list micro"
 end
 
