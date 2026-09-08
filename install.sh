@@ -50,6 +50,7 @@ fi
 echo "Install micro config"
 MICRO_CONFIG_DIR="${HOME}/.config/micro"
 MICRO_CONFIG_FILE="${MICRO_CONFIG_DIR}/settings.json"
+mkdir -p "${MICRO_CONFIG_DIR}"
 if [[ -f "${MICRO_CONFIG_FILE}" ]] \
  && [[ $(readlink -f "${MICRO_CONFIG_FILE}") != "${SCRIPT_DIR}/micro-settings.json" ]]
 then
