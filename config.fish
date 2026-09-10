@@ -27,6 +27,7 @@ if status is-interactive
   alias .. "cd .."
   alias anacrontab "$EDITOR ~/.anacron/etc/anacrontab"
   alias cd.. "cd .."
+  alias docker-compose-downup "docker compose down && docker compose up"
   alias fish_config_file "$EDITOR ~/.config/fish/config.fish"
   alias fstab "$EDITOR /etc/fstab"
 
